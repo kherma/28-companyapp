@@ -15,6 +15,12 @@ mongoClient.connect(
     } else {
       console.log('Successfully connected to the database');
       const app = express();
+      const db = client.db('companyDB');
+
+      app.use((req, res, next) => {
+        req.db = db;
+        next();
+      });
 
       app.use(cors());
       app.use(express.json());
